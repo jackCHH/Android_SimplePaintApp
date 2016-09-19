@@ -9,8 +9,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jackhou.paint.MainActivity">
 
-    <TextView
+    <com.example.jackhou.paint.PaintView
+        android:id="@+id/paint_view"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Reset"
+        android:id="@+id/reset_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/paint_view"
+        android:layout_alignEnd="@+id/paint_view" />
+
+
 </RelativeLayout>
