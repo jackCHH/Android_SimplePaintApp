@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button reset;
     private Spinner strokeSize;
+    private Spinner colorOption;
     PaintView paintView;
 
     @Override
@@ -38,6 +39,24 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
                 paintView.updateStroke(pos+1);
                 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent){
+
+            }
+        });
+
+
+        colorOption = (Spinner) findViewById(R.id.color_spinner);
+        ArrayAdapter<CharSequence> color_adapter = ArrayAdapter.createFromResource(this, R.array.color_options, android.R.layout.simple_spinner_item);
+        color_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        colorOption.setAdapter(color_adapter);
+        colorOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+                paintView.updateColor(pos);
+
             }
 
             @Override

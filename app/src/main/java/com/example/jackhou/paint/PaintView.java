@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PaintView extends View {
 
@@ -18,6 +19,13 @@ public class PaintView extends View {
     private Path path;
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
+    private HashMap<Integer, Integer> colorHash = new HashMap<Integer, Integer>(){{
+        put(0,Color.BLACK);
+        put(1,Color.RED);
+        put(2,Color.BLUE);
+        put(3,Color.YELLOW);
+        put(4,Color.GREEN);
+    }};
 
 
 
@@ -65,9 +73,21 @@ public class PaintView extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
         paintList.add(paint);
 
-
     }
-    
+
+    public void updateColor(int index){
+        path = new Path();
+        paint = new Paint();
+        pathList.add(path);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(colorHash.get(index));
+        paint.setStrokeWidth(10);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paintList.add(paint);
+    }
+
 
     protected void onDraw(Canvas canvas){
 
