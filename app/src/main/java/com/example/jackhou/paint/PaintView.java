@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -19,103 +17,69 @@ public class PaintView extends View {
     private Path path;
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
-    private SparseArray colorHash;
-
-
-
+    private int[] colorHash;
 
     public PaintView(Context context, AttributeSet attrs){
         super(context, attrs);
-        init();
+        initColorArray();
+        resetArrays();
+        initCanvas(1,0);
     }
 
-    private void init(){
-
-        colorHash = new SparseArray(5);
-        colorHash.append(0, Color.BLACK);
-        colorHash.append(1, Color.RED);
-        colorHash.append(2, Color.BLUE);
-        colorHash.append(3, Color.YELLOW);
-        colorHash.append(4, Color.GREEN);
-
+    public void resetArrays(){
         pathList = new ArrayList<Path>();
         paintList = new ArrayList<Paint>();
+    }
 
+    public void initColorArray(){
+        colorHash = new int[] {Color.BLACK, Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN};
+    }
+
+    private void initCanvas(int stroke_size, int color_key){
         path = new Path();
         pathList.add(path);
-
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(10);
+        paint.setColor(colorHash[color_key]);
+        paint.setStrokeWidth(10*stroke_size);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paintList.add(paint);
-
     }
 
     public void clear(){
-        pathList = new ArrayList<Path>();
-        paintList = new ArrayList<Paint>();
+        resetArrays();
         invalidate();
-        init();
+        initCanvas(1,0);
     }
 
     public void updateStroke(int size, int key){
-
-        path = new Path();
-        paint = new Paint();
-        pathList.add(path);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor((int)colorHash.get(key));
-        paint.setStrokeWidth(10*size);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paintList.add(paint);
-
+        initCanvas(size, key);
     }
 
     public void updateColor(int size, int key){
-        path = new Path();
-        paint = new Paint();
-        pathList.add(path);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor((int)colorHash.get(key));
-        paint.setStrokeWidth(10*size);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
-        paintList.add(paint);
+        initCanvas(size, key);
     }
 
-
     protected void onDraw(Canvas canvas){
-
-        Log.i("Paint Size", Integer.toString(paintList.size()));
-        Log.i("Path Size", Integer.toString(pathList.size()));
-
-
         for(int i = 0; i < paintList.size(); i++){
             canvas.drawPath(pathList.get(i), paintList.get(i));
         }
-
-
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float touchX = event.getX();
-        float touchY = event.getY();
+        float X = event.getX();
+        float Y = event.getY();
 
         if(event.getAction() == MotionEvent.ACTION_DOWN){
 
-            path.moveTo(touchX, touchY);
+            path.moveTo(X,Y);
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE){
-            path.lineTo(touchX, touchY);
+            path.lineTo(X,Y);
         }
         else{
             return false;
@@ -123,11 +87,5 @@ public class PaintView extends View {
 
         postInvalidate();
         return true;
-
-
     }
-
-
-
-
 }
