@@ -6,13 +6,20 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
 
 public class PaintView extends View {
 
     private Paint paint;
-    private Path path = new Path();
+    private Path path;
+    private ArrayList<Path> pathList;
+    private ArrayList<Paint> paintList;
+
+
 
     public PaintView(Context context, AttributeSet attrs){
         super(context, attrs);
@@ -20,20 +27,58 @@ public class PaintView extends View {
     }
 
     private void init(){
-        paint = new Paint();
+
+        pathList = new ArrayList<Path>();
+        paintList = new ArrayList<Paint>();
+
+        path = new Path();
+        pathList.add(path);
+
+
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLACK);
-        paint.setAntiAlias(true);
-        paint.setStrokeWidth(5);
+        paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
+        paintList.add(paint);
         
     }
 
+    public void clear(){
+        pathList = new ArrayList<Path>();
+        paintList = new ArrayList<Paint>();
+        invalidate();
+    }
+
+    public void updateStroke(int size){
+
+        path = new Path();
+        paint = new Paint();
+        pathList.add(path);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(10*size);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paintList.add(paint);
+
+
+    }
+    
+
     protected void onDraw(Canvas canvas){
 
-        canvas.drawPath(path, paint);
+        Log.i("Paint Size", Integer.toString(paintList.size()));
+        Log.i("Path Size", Integer.toString(pathList.size()));
+
+
+        for(int i = 0; i < paintList.size(); i++){
+            canvas.drawPath(pathList.get(i), paintList.get(i));
+        }
+
 
     }
 
@@ -43,6 +88,7 @@ public class PaintView extends View {
         float touchY = event.getY();
 
         if(event.getAction() == MotionEvent.ACTION_DOWN){
+
             path.moveTo(touchX, touchY);
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE){
@@ -58,10 +104,7 @@ public class PaintView extends View {
 
     }
 
-    public void clear(){
-        path = new Path();
-        invalidate();
-    }
+
 
 
 }

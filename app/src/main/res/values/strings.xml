@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Paint</string>
+    <string-array name="stroke_size">
+        <item>X1</item>
+        <item>X2</item>
+        <item>X3</item>
+        <item>X4</item>
+        <item>X5</item>
+    </string-array>
 </resources>
