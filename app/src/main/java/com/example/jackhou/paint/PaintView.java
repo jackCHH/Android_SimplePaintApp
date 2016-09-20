@@ -7,11 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PaintView extends View {
 
@@ -19,13 +19,8 @@ public class PaintView extends View {
     private Path path;
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
-    private HashMap<Integer, Integer> colorHash = new HashMap<Integer, Integer>(){{
-        put(0,Color.BLACK);
-        put(1,Color.RED);
-        put(2,Color.BLUE);
-        put(3,Color.YELLOW);
-        put(4,Color.GREEN);
-    }};
+    private SparseArray colorHash;
+
 
 
 
@@ -35,6 +30,13 @@ public class PaintView extends View {
     }
 
     private void init(){
+
+        colorHash = new SparseArray(5);
+        colorHash.append(0, Color.BLACK);
+        colorHash.append(1, Color.RED);
+        colorHash.append(2, Color.BLUE);
+        colorHash.append(3, Color.YELLOW);
+        colorHash.append(4, Color.GREEN);
 
         pathList = new ArrayList<Path>();
         paintList = new ArrayList<Paint>();
@@ -51,7 +53,7 @@ public class PaintView extends View {
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paintList.add(paint);
-        
+
     }
 
     public void clear(){
@@ -67,7 +69,7 @@ public class PaintView extends View {
         paint = new Paint();
         pathList.add(path);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(colorHash.get(key));
+        paint.setColor((int)colorHash.get(key));
         paint.setStrokeWidth(10*size);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
@@ -81,7 +83,7 @@ public class PaintView extends View {
         paint = new Paint();
         pathList.add(path);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(colorHash.get(key));
+        paint.setColor((int)colorHash.get(key));
         paint.setStrokeWidth(10*size);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
