@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner colorOption;
     PaintView paintView;
 
+    private int currentStrokeSize;
+    private int currentColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         strokeSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
-                paintView.updateStroke(pos+1);
+                currentStrokeSize = pos+1;
+                paintView.updateStroke(currentStrokeSize, currentColor);
                 
             }
 
@@ -55,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         colorOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
-                paintView.updateColor(pos);
+                currentColor = pos;
+                paintView.updateColor(currentStrokeSize, currentColor);
 
             }
 

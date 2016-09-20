@@ -58,15 +58,16 @@ public class PaintView extends View {
         pathList = new ArrayList<Path>();
         paintList = new ArrayList<Paint>();
         invalidate();
+        init();
     }
 
-    public void updateStroke(int size){
+    public void updateStroke(int size, int key){
 
         path = new Path();
         paint = new Paint();
         pathList.add(path);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
+        paint.setColor(colorHash.get(key));
         paint.setStrokeWidth(10*size);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
@@ -75,13 +76,13 @@ public class PaintView extends View {
 
     }
 
-    public void updateColor(int index){
+    public void updateColor(int size, int key){
         path = new Path();
         paint = new Paint();
         pathList.add(path);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(colorHash.get(index));
-        paint.setStrokeWidth(10);
+        paint.setColor(colorHash.get(key));
+        paint.setStrokeWidth(10*size);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
