@@ -5,12 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button reset;
+    private ImageButton reset;
     private Spinner strokeSize;
     private Spinner colorOption;
     PaintView paintView;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         paintView = (PaintView) findViewById(R.id.paint_view);
 
-        reset = (Button) findViewById(R.id.reset_button);
+        reset = (ImageButton) findViewById(R.id.reset_button);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
