@@ -18,6 +18,8 @@ public class PaintView extends View {
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
     private int[] colorHash;
+//    private Bitmap bitmap;
+//    private Canvas c;
 
     public PaintView(Context context, AttributeSet attrs){
         super(context, attrs);
@@ -32,7 +34,7 @@ public class PaintView extends View {
     }
 
     public void initColorArray(){
-        colorHash = new int[] {Color.BLACK, Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN};
+        colorHash = new int[] {Color.BLACK, Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN, Color.TRANSPARENT};
     }
 
     private void initCanvas(int stroke_size, int color_key){
@@ -49,24 +51,41 @@ public class PaintView extends View {
         paintList.add(paint);
     }
 
-    public void clear(){
+    public void clear(int strokeSize, int color_key){
         resetArrays();
         invalidate();
-        initCanvas(1,0);
+        initCanvas(strokeSize,color_key);
     }
 
-    public void updateStroke(int size, int key){
-        initCanvas(size, key);
+    public void erase(){
+//
+//        Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+//        c.drawBitmap(bitmap, 0,0,null);
+//        this.draw(c);
+//
+//        File file = new File(Environment.getExternalStorageDirectory() + "/sign.png");
+//
+//        try {
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(file));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
-    public void updateColor(int size, int key){
-        initCanvas(size, key);
+    public void updateStroke(int strokeSize, int key){
+        initCanvas(strokeSize, key);
+    }
+
+    public void updateColor(int strokeSize, int key){
+        initCanvas(strokeSize, key);
     }
 
     protected void onDraw(Canvas canvas){
+
         for(int i = 0; i < paintList.size(); i++){
             canvas.drawPath(pathList.get(i), paintList.get(i));
         }
+
     }
 
     @Override
