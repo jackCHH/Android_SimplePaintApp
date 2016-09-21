@@ -18,8 +18,6 @@ public class PaintView extends View {
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
     private int[] colorHash;
-//    private Bitmap bitmap;
-//    private Canvas c;
 
     public PaintView(Context context, AttributeSet attrs){
         super(context, attrs);
@@ -34,7 +32,7 @@ public class PaintView extends View {
     }
 
     public void initColorArray(){
-        colorHash = new int[] {Color.BLACK, Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN, Color.TRANSPARENT};
+        colorHash = new int[] {Color.BLACK, Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN, Color.WHITE};
     }
 
     private void initCanvas(int stroke_size, int color_key){
@@ -45,7 +43,6 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(colorHash[color_key]);
         paint.setStrokeWidth(10*stroke_size);
-        paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paintList.add(paint);
@@ -58,18 +55,7 @@ public class PaintView extends View {
     }
 
     public void erase(){
-//
-//        Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
-//        c.drawBitmap(bitmap, 0,0,null);
-//        this.draw(c);
-//
-//        File file = new File(Environment.getExternalStorageDirectory() + "/sign.png");
-//
-//        try {
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(file));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        initCanvas(5, 5);
     }
 
     public void updateStroke(int strokeSize, int key){
@@ -81,6 +67,8 @@ public class PaintView extends View {
     }
 
     protected void onDraw(Canvas canvas){
+
+        canvas.drawColor(Color.WHITE);
 
         for(int i = 0; i < paintList.size(); i++){
             canvas.drawPath(pathList.get(i), paintList.get(i));
