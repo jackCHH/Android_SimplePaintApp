@@ -67,13 +67,10 @@ public class PaintView extends View {
     }
 
     protected void onDraw(Canvas canvas){
-
         canvas.drawColor(Color.WHITE);
-
         for(int i = 0; i < paintList.size(); i++){
             canvas.drawPath(pathList.get(i), paintList.get(i));
         }
-
     }
 
     @Override

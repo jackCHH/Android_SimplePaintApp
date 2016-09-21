@@ -21,14 +21,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.color_spinner) Spinner colorOption;
     private int currentStrokeSize = 1;
     private int currentColor = 0;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        presenter = new MainPresenter(paintView);
         initAdapters();
-
     }
 
     public void initAdapters(){
@@ -43,24 +44,23 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.reset_button)
     public void onResetClick(){
-        paintView.clear(currentStrokeSize,currentColor);
+        presenter.clear(currentStrokeSize,currentColor);
     }
-
 
     @OnClick(R.id.eraser)
     public void onEraserClick(){
-        paintView.erase();
+        presenter.erase();
     }
 
     @OnItemSelected(R.id.color_spinner)
     public void colorSpinnerItemSelected(Spinner spinner, int position){
         currentColor = position;
-        paintView.updateColor(currentStrokeSize, currentColor);
+        presenter.updateColor(currentStrokeSize, currentColor);
     }
 
     @OnItemSelected(R.id.stroke_spinner)
     public void strokeSpinnerItemSelected(Spinner spinner, int position){
         currentStrokeSize = position+1;
-        paintView.updateStroke(currentStrokeSize, currentColor);
+        presenter.updateStroke(currentStrokeSize, currentColor);
     }
 }
