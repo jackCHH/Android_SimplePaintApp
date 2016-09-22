@@ -23,4 +23,5 @@ public class MainPresenter {
     public void updateStroke(int strokeWidth, int colorOption){
         view.updateStroke(strokeWidth, colorOption);
     }
+
 }

@@ -2,10 +2,12 @@ package com.example.jackhou.paint;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.eraser) ImageButton eraser;
     @BindView(R.id.stroke_spinner) Spinner strokeSize;
     @BindView(R.id.color_spinner) Spinner colorOption;
+    @BindArray(R.array.color_options) String[] colors;
+    @BindArray(R.array.stroke_size)String[] strokes;
     private int currentStrokeSize = 1;
     private int currentColor = 0;
     private MainPresenter presenter;
@@ -33,13 +37,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initAdapters(){
-        ArrayAdapter<CharSequence> strokeAdapter = ArrayAdapter.createFromResource(this, R.array.stroke_size, android.R.layout.simple_spinner_item);
-        strokeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        strokeSize.setAdapter(strokeAdapter);
-
-        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(this, R.array.color_options, android.R.layout.simple_spinner_item);
-        colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        colorOption.setAdapter(colorAdapter);
+        strokeSize.setAdapter(new strokeAdapter(strokes, this));
+        colorOption.setAdapter(new colorAdapter(colors, this));
     }
 
     @OnClick(R.id.reset_button)
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnItemSelected(R.id.color_spinner)
-    public void colorSpinnerItemSelected(Spinner spinner, int position){
+    public void colorSpinnerItemSelected(AdapterView<?> parent, View view, int position, long id){
         currentColor = position;
         presenter.updateColor(currentStrokeSize, currentColor);
     }

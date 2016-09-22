@@ -79,7 +79,6 @@ public class PaintView extends View {
         float Y = event.getY();
 
         if(event.getAction() == MotionEvent.ACTION_DOWN){
-
             path.moveTo(X,Y);
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE){
