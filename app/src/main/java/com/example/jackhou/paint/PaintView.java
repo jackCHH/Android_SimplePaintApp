@@ -32,7 +32,7 @@ public class PaintView extends View {
     }
 
     public void initColorArray(){
-        colorHash = new int[] {Color.BLACK, Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN, Color.WHITE};
+        colorHash = new int[] {Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA, Color.WHITE};
     }
 
     private void initCanvas(int stroke_size, int color_key){
@@ -55,7 +55,7 @@ public class PaintView extends View {
     }
 
     public void erase(){
-        initCanvas(5, 5);
+        initCanvas(5, 7);
     }
 
     public void updateStroke(int strokeSize, int key){

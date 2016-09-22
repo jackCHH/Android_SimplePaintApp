@@ -11,9 +11,11 @@
     <string-array name="color_options">
         <item>Black</item>
         <item>Red</item>
-        <item>Blue</item>
         <item>Yellow</item>
         <item>Green</item>
+        <item>Cyan</item>
+        <item>Blue</item>
+        <item>Magenta</item>
     </string-array>
 
 </resources>

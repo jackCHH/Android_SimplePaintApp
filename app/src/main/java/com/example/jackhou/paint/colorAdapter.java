@@ -32,6 +32,7 @@ public class colorAdapter extends BaseAdapter {
         return position;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         TextView textview = new TextView(context);
@@ -46,13 +47,19 @@ public class colorAdapter extends BaseAdapter {
                 textview.setBackgroundColor(Color.RED);
                 break;
             case 2:
-                textview.setBackgroundColor(Color.BLUE);
-                break;
-            case 3:
                 textview.setBackgroundColor(Color.YELLOW);
                 break;
-            case 4:
+            case 3:
                 textview.setBackgroundColor(Color.GREEN);
+                break;
+            case 4:
+                textview.setBackgroundColor(Color.CYAN);
+                break;
+            case 5:
+                textview.setBackgroundColor(Color.BLUE);
+                break;
+            case 6:
+                textview.setBackgroundColor(Color.MAGENTA);
                 break;
         }
 
