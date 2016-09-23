@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,12 +19,15 @@ public class PaintView extends View{
     private Path path;
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
+    private ArrayList<Paint> circlePaintList;
+    private ArrayList<Circle> circleList;
     private int[] colorHash;
     private float currentX;
     private float currentY;
     private float endX;
     private float endY;
     private boolean circleFlag = false;
+    private boolean startCircleDraw = false;
 
 
     public PaintView(Context context, AttributeSet attrs){
@@ -37,10 +41,13 @@ public class PaintView extends View{
     public void resetArrays(){
         pathList = new ArrayList<Path>();
         paintList = new ArrayList<Paint>();
+        circleList = new ArrayList<Circle>();
+        circlePaintList = new ArrayList<Paint>();
     }
 
     public void initColorArray(){
         colorHash = new int[] {Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.MAGENTA, Color.WHITE};
+
     }
 
     private void initCanvas(int stroke_size, int color_key){
@@ -81,17 +88,30 @@ public class PaintView extends View{
     protected void onDraw(Canvas canvas){
         canvas.drawColor(Color.WHITE);
 
-        if(!circleFlag){
-            for(int i = 0; i < paintList.size(); i++){
-                canvas.drawPath(pathList.get(i), paintList.get(i));
-            }
+        for(int i = 0; i < paintList.size(); i++){
+            canvas.drawPath(pathList.get(i), paintList.get(i));
         }
-        else{
-            if(currentX != 0.0f && currentY != 0.0f && endX != 0.0f && endY != 0.0f){
-                float radius = painterPresenter.calculate(currentX, currentY, endX, endY);
-                canvas.drawCircle(currentX,currentY,radius,paint);
-                circleFlag = false;
-            }
+
+        for(int i = 0; i < circleList.size(); i++){
+            Circle c = circleList.get(i);
+            canvas.drawCircle(c.getX(), c.getY(),c.getRadius(), circlePaintList.get(i));
+        }
+
+        if(startCircleDraw){
+            float radius = painterPresenter.calculate(currentX, currentY, endX, endY);
+
+            Paint circlePaint = paint;
+            circlePaint.setColor(paint.getColor());
+            circlePaintList.add(circlePaint);
+
+            Circle current_circle = new Circle(currentX, currentY, radius);
+
+            circleList.add(current_circle);
+
+
+            canvas.drawCircle(currentX,currentY,radius,circlePaint);
+            startCircleDraw = false;
+            circleFlag = false;
         }
     }
 
@@ -117,9 +137,10 @@ public class PaintView extends View{
                 currentX = x;
                 currentY = y;
             }
-            else if(event.getAction() == MotionEvent.ACTION_UP){
+            else if(event.getAction() == MotionEvent.ACTION_UP) {
                 endX = x;
                 endY = y;
+                startCircleDraw = true;
             }
             else{
                 return false;

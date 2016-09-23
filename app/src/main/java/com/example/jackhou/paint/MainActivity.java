@@ -2,6 +2,7 @@ package com.example.jackhou.paint;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -43,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.draw_circle)
-    public void onCircleClick(){ presenter.drawCircle(currentColor);}
+    public void onCircleClick(){
+        Log.i("Button Pressed" , "DrawCircle");
+        presenter.drawCircle(currentColor);
+    }
 
     @OnClick(R.id.reset_button)
     public void onResetClick(){
