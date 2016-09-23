@@ -11,19 +11,27 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class PaintView extends View {
+public class PaintView extends View{
 
+    private PainterPresenter painterPresenter;
     private Paint paint;
     private Path path;
     private ArrayList<Path> pathList;
     private ArrayList<Paint> paintList;
     private int[] colorHash;
+    private float currentX;
+    private float currentY;
+    private float endX;
+    private float endY;
+    private boolean circleFlag = false;
+
 
     public PaintView(Context context, AttributeSet attrs){
         super(context, attrs);
         initColorArray();
         resetArrays();
         initCanvas(1,0);
+        painterPresenter = new PainterPresenter();
     }
 
     public void resetArrays(){
@@ -66,28 +74,57 @@ public class PaintView extends View {
         initCanvas(strokeSize, key);
     }
 
+    public void drawCircle(int key){
+        circleFlag = true;
+    }
+
     protected void onDraw(Canvas canvas){
         canvas.drawColor(Color.WHITE);
-        for(int i = 0; i < paintList.size(); i++){
-            canvas.drawPath(pathList.get(i), paintList.get(i));
+
+        if(!circleFlag){
+            for(int i = 0; i < paintList.size(); i++){
+                canvas.drawPath(pathList.get(i), paintList.get(i));
+            }
+        }
+        else{
+            if(currentX != 0.0f && currentY != 0.0f && endX != 0.0f && endY != 0.0f){
+                float radius = painterPresenter.calculate(currentX, currentY, endX, endY);
+                canvas.drawCircle(currentX,currentY,radius,paint);
+                circleFlag = false;
+            }
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float X = event.getX();
-        float Y = event.getY();
+        float x = event.getX();
+        float y = event.getY();
 
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
-            path.moveTo(X,Y);
-        }
-        else if(event.getAction() == MotionEvent.ACTION_MOVE){
-            path.lineTo(X,Y);
+        if(!circleFlag){
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                path.moveTo(x,y);
+            }
+            else if(event.getAction() == MotionEvent.ACTION_MOVE){
+                path.lineTo(x,y);
+            }
+            else{
+                return false;
+            }
+
         }
         else{
-            return false;
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                currentX = x;
+                currentY = y;
+            }
+            else if(event.getAction() == MotionEvent.ACTION_UP){
+                endX = x;
+                endY = y;
+            }
+            else{
+                return false;
+            }
         }
-
         postInvalidate();
         return true;
     }

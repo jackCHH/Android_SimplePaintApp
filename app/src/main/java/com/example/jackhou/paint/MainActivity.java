@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @BindView(R.id.paint_view) PaintView paintView;
+    @BindView(R.id.draw_circle) ImageButton drawCircle;
     @BindView(R.id.reset_button) ImageButton reset;
     @BindView(R.id.eraser) ImageButton eraser;
     @BindView(R.id.stroke_spinner) Spinner strokeSize;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         strokeSize.setAdapter(new strokeAdapter(strokes, this));
         colorOption.setAdapter(new colorAdapter(colors, this));
     }
+
+    @OnClick(R.id.draw_circle)
+    public void onCircleClick(){ presenter.drawCircle(currentColor);}
 
     @OnClick(R.id.reset_button)
     public void onResetClick(){

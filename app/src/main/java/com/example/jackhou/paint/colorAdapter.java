@@ -32,11 +32,12 @@ public class colorAdapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         TextView textview = new TextView(context);
         textview.setText(strings[position]);
+
+        // todo: textView.setBackgroundColor(presenter.getColorForPosition(psoition));
 
         textview.setTextColor(Color.TRANSPARENT);
         switch(position){

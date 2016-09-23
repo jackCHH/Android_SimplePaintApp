@@ -24,7 +24,7 @@
         android:layout_alignRight="@+id/paint_view"
         android:layout_alignEnd="@+id/paint_view"
         android:background="@android:color/transparent"
-        android:layout_alignTop="@+id/eraser" />
+        android:layout_below="@+id/eraser" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -69,11 +69,20 @@
         android:id="@+id/eraser"
         android:src="@drawable/eraser_2"
         android:background="@android:color/transparent"
-        android:layout_alignBottom="@+id/stroke_spinner"
-        android:layout_toLeftOf="@+id/reset_button"
-        android:layout_toStartOf="@+id/reset_button"
-        android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp" />
+        android:layout_above="@+id/imageView2"
+        android:layout_alignRight="@+id/paint_view"
+        android:layout_alignEnd="@+id/paint_view"
+        android:layout_marginBottom="49dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/draw_circle"
+        android:background="@android:color/transparent"
+        android:src="@drawable/oval"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/paint_view"
+        android:layout_alignEnd="@+id/paint_view" />
 
 
 </RelativeLayout>
