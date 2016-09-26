@@ -24,8 +24,8 @@ public class MainPresenter {
         view.updateStroke(strokeWidth, colorOption);
     }
 
-    public void drawCircle(int colorOption){
-        view.drawCircle(colorOption);
+    public void drawCircle(){
+        view.drawCircle();
     }
 
 }

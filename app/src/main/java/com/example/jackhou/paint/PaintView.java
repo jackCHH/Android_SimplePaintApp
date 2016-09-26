@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -81,7 +80,7 @@ public class PaintView extends View{
         initCanvas(strokeSize, key);
     }
 
-    public void drawCircle(int key){
+    public void drawCircle(){
         circleFlag = true;
     }
 
@@ -105,9 +104,7 @@ public class PaintView extends View{
             circlePaintList.add(circlePaint);
 
             Circle current_circle = new Circle(currentX, currentY, radius);
-
             circleList.add(current_circle);
-
 
             canvas.drawCircle(currentX,currentY,radius,circlePaint);
             startCircleDraw = false;
@@ -120,6 +117,7 @@ public class PaintView extends View{
         float x = event.getX();
         float y = event.getY();
 
+        // bettername
         if(!circleFlag){
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 path.moveTo(x,y);
@@ -130,7 +128,6 @@ public class PaintView extends View{
             else{
                 return false;
             }
-
         }
         else{
             if(event.getAction() == MotionEvent.ACTION_DOWN){

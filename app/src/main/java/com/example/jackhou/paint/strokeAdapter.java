@@ -36,6 +36,7 @@ public class strokeAdapter extends BaseAdapter {
         TextView textview = new TextView(context);
         textview.setText(strings[position]);
 
+        // HashMap / array
         switch(position){
             case 0:
                 textview.setTextSize(15);

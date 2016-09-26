@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.color_spinner) Spinner colorOption;
     @BindArray(R.array.color_options) String[] colors;
     @BindArray(R.array.stroke_size)String[] strokes;
+    // move to presenter
     private int currentStrokeSize = 1;
     private int currentColor = 0;
     private MainPresenter presenter;
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.draw_circle)
     public void onCircleClick(){
         Log.i("Button Pressed" , "DrawCircle");
-        presenter.drawCircle(currentColor);
+        presenter.drawCircle();
     }
 
     @OnClick(R.id.reset_button)
